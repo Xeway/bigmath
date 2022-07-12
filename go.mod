@@ -1,3 +1,3 @@
-module github.com/xeway/big-math
+module github.com/Xeway/big-math
 
 go 1.17
