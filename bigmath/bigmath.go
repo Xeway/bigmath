@@ -7,11 +7,11 @@ import (
 	"sync"
 )
 
-func isOverflow(bigNum *big.Int) bool {
-	return bigNum.String() != strconv.Itoa(int(bigNum.Int64()))
-}
-
 func Log10(x *big.Int) float64 {
+	isOverflow := func(bigNum *big.Int) bool {
+		return bigNum.String() != strconv.Itoa(int(bigNum.Int64()))
+	}
+
 	isOf := isOverflow(x)
 
 	if isOf {
