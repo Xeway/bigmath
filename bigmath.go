@@ -4,7 +4,6 @@ import (
 	"math"
 	"math/big"
 	"strconv"
-	"sync"
 )
 
 func IntLog10(x *big.Int) float64 {
@@ -33,19 +32,7 @@ func IntLog10(x *big.Int) float64 {
 
 	numMul := math.Pow(2, float64(len(num)))
 
-	var bigNumLog float64
-
-	var wg sync.WaitGroup
-	wg.Add(int(numMul))
-
-	for k := 0; k < int(numMul); k++ {
-		go func() {
-			bigNumLog += math.Log10(float64(num[len(num)-1].Int64()))
-
-			wg.Done()
-		}()
-	}
-	wg.Wait()
+	bigNumLog := math.Log10(float64(num[len(num)-1].Int64())) * numMul
 
 	return bigNumLog
 }
@@ -82,20 +69,8 @@ func FloatLog10(x *big.Float) float64 {
 
 	numMul := math.Pow(2, float64(len(num)))
 
-	var bigNumLog float64
-
-	var wg sync.WaitGroup
-	wg.Add(int(numMul))
-
-	for k := 0; k < int(numMul); k++ {
-		go func() {
-			v, _ := num[len(num)-1].Float64()
-			bigNumLog += math.Log10(v)
-
-			wg.Done()
-		}()
-	}
-	wg.Wait()
+	v, _ := num[len(num)-1].Float64()
+	bigNumLog := math.Log10(v) * numMul
 
 	return bigNumLog
 }
