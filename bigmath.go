@@ -1,6 +1,7 @@
 package bigmath
 
 import (
+	"errors"
 	"math"
 	"math/big"
 	"strconv"
@@ -60,6 +61,58 @@ func FloatLog10(x *big.Float) float64 {
 	for isOf {
 		if firstIteration {
 			num = append(num, big.NewFloat(0).Sqrt(x))
+			firstIteration = false
+		} else {
+			num = append(num, big.NewFloat(0).Sqrt(num[len(num)-1]))
+		}
+		isOf = isOverflow(num[len(num)-1])
+	}
+
+	numMul := math.Pow(2, float64(len(num)))
+
+	v, _ := num[len(num)-1].Float64()
+	bigNumLog := math.Log10(v) * numMul
+
+	return bigNumLog
+}
+
+func RatLog10(x *big.Rat) float64 {
+	isOverflow := func(bigNum interface{}) bool {
+		switch bigNum.(type) {
+		case *big.Float:
+			_, acc := bigNum.(*big.Float).Float64()
+			if acc == big.Exact {
+				return false
+			} else {
+				return true
+			}
+		case *big.Rat:
+			f, _ := bigNum.(*big.Rat).Float64()
+			if strconv.FormatFloat(f, 'E', -1, 64) == "+Inf" {
+				return true
+			} else {
+				return false
+			}
+		default:
+			errors.New("Forbidden value type.")
+			return false
+		}
+	}
+
+	isOf := isOverflow(x)
+
+	if !isOf {
+		v, _ := x.Float64()
+		return math.Log10(v)
+	}
+
+	num := make([]*big.Float, 0)
+
+	firstIteration := true
+	for isOf {
+		if firstIteration {
+			y, _ := x.Float64()
+			num = append(num, big.NewFloat(0).Sqrt(big.NewFloat(y)))
 			firstIteration = false
 		} else {
 			num = append(num, big.NewFloat(0).Sqrt(num[len(num)-1]))
