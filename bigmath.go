@@ -111,8 +111,7 @@ func RatLog10(x *big.Rat) float64 {
 	firstIteration := true
 	for isOf {
 		if firstIteration {
-			y, _ := x.Float64()
-			num = append(num, big.NewFloat(0).Sqrt(big.NewFloat(y)))
+			num = append(num, big.NewFloat(0).Sqrt(big.NewFloat(0).SetRat(x)))
 			firstIteration = false
 		} else {
 			num = append(num, big.NewFloat(0).Sqrt(num[len(num)-1]))
