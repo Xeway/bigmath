@@ -1,11 +1,31 @@
 package bigmath
 
 import (
-	"errors"
 	"math"
 	"math/big"
 	"strconv"
 )
+
+func Log10(x Big) float64 {
+	if x.Sign() != 1 {
+		if x.Sign() == 0 {
+			return math.Inf(-1)
+		} else {
+			return math.NaN()
+		}
+	}
+
+	switch x := x.(type) {
+	case *big.Int:
+		return IntLog10(x)
+	case *big.Float:
+		return FloatLog10(x)
+	case *big.Rat:
+		return RatLog10(x)
+	default:
+		return math.NaN()
+	}
+}
 
 func IntLog10(x *big.Int) float64 {
 	isOverflow := func(bigNum *big.Int) bool {
@@ -78,23 +98,22 @@ func FloatLog10(x *big.Float) float64 {
 
 func RatLog10(x *big.Rat) float64 {
 	isOverflow := func(bigNum interface{}) bool {
-		switch bigNum.(type) {
+		switch bigNum := bigNum.(type) {
 		case *big.Float:
-			_, acc := bigNum.(*big.Float).Float64()
+			_, acc := bigNum.Float64()
 			if acc == big.Exact {
 				return false
 			} else {
 				return true
 			}
 		case *big.Rat:
-			f, _ := bigNum.(*big.Rat).Float64()
+			f, _ := bigNum.Float64()
 			if strconv.FormatFloat(f, 'E', -1, 64) == "+Inf" {
 				return true
 			} else {
 				return false
 			}
 		default:
-			errors.New("Forbidden value type.")
 			return false
 		}
 	}
@@ -125,4 +144,8 @@ func RatLog10(x *big.Rat) float64 {
 	bigNumLog := math.Log10(v) * numMul
 
 	return bigNumLog
+}
+
+type Big interface {
+	Sign() int
 }
