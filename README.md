@@ -22,6 +22,6 @@ Now if ![equation sqrt(x)](./equations/equation-5.jpg) still _overflows_, we jus
 And if ![equation sqrt(sqrt(x))](./equations/equation-9.jpg) is still too big, we continue the same process by computing its square root, and multiply it by _8_.
 So the general formula is:
 
-![equation log(2^n√x) * 2^n = log(x)](./equations/equation-10.jpg)
+![equation log((2^n)√x) * 2^n = log(x)](./equations/equation-10.jpg)
 
 <sup>(n ∈ N being the number of times we've computed the square root of the previous square root until we found a decent value that doesn't _overflow_. Meaning when ![equation 2^n√x](./equations/equation-11.jpg) <= `max number before overflow`)</sup>

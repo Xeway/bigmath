@@ -1,3 +1,4 @@
+// This package provides mathematical functions that are not provided by the default math/big package (like logarithm).
 package bigmath
 
 import (
