@@ -17,8 +17,8 @@ So we can do:
 
 <sup>(let x be a big number)</sup><br>
 By computing the square root of _x_ (with the [`Sqrt` function provided by the math/big package](https://pkg.go.dev/math/big)), that value will be smaller (![equation sqrt(x) < x](./equations/equation-3.jpg)) and may not cause an _overflow_.<br>
-If it doesn't _overflow_, by _adding_ the _logarithm_ of this value with itself (![equation log(sqrt(x)) + log(sqrt(x))](./equations/equation-4.jpg)), we can compute the logarithm of the big number.
-Now if ![equation sqrt(x)](./equations/equation-5.jpg) still _overflows_, we just have to compute ![equation sqrt(sqrt(x))](./equations/equation-6.jpg). In other terms we get the _fourth root_. So to get ![equation log(x)](./equations/equation-7.jpg), we have to multiply ![equation sqrt(sqrt(x)) * 4](./equations/equation-8.jpg).
+If it doesn't _overflow_, by _adding_ the _logarithm_ of this value with itself (![equation log(sqrt(x)) + log(sqrt(x))](./equations/equation-4.jpg)), we can compute the logarithm of the big number.<br>
+Now if ![equation sqrt(x)](./equations/equation-5.jpg) still _overflows_, we just have to compute ![equation sqrt(sqrt(x))](./equations/equation-6.jpg). In other terms we get the _fourth root_. So to get ![equation log(x)](./equations/equation-7.jpg), we have to multiply ![equation sqrt(sqrt(x)) * 4](./equations/equation-8.jpg).<br>
 And if ![equation sqrt(sqrt(x))](./equations/equation-9.jpg) is still too big, we continue the same process by computing its square root, and multiply it by _8_.
 So the general formula is:
 
