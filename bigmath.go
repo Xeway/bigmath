@@ -6,6 +6,20 @@ import (
 	"strconv"
 )
 
+// This interface contains a function Sign common to all 3 types of the big/math package (*big.Int, *big.Float, *big.Rat).
+// If the type is wrong, an error will occurs.
+// Otherwise, a same snippet of code can be used for 3 different types (used in Log10).
+type Big interface {
+	Sign() int
+}
+
+// Log10 returns the decimal logarithm of x.
+// x has to be of type *big.Int, *big.Float or *big.Rat.
+// For example, if x is of type *big.Float, FloatLog10 will be called.
+// Special cases are:
+//
+//	Log(0) = -Inf
+//	Log(x < 0) = NaN
 func Log10(x Big) float64 {
 	if x.Sign() != 1 {
 		if x.Sign() == 0 {
@@ -27,6 +41,9 @@ func Log10(x Big) float64 {
 	}
 }
 
+// IntLog10 returns the decimal logarithm of x which is type *big.Int.
+// The special cases are the same as for Log10.
+// Use Log10 for a more generic function that treats all types of the math/big package (*big.Int, *big.Float, *big.Rat).
 func IntLog10(x *big.Int) float64 {
 	isOverflow := func(bigNum *big.Int) bool {
 		return bigNum.String() != strconv.Itoa(int(bigNum.Int64()))
@@ -58,6 +75,9 @@ func IntLog10(x *big.Int) float64 {
 	return bigNumLog
 }
 
+// FloatLog10 returns the decimal logarithm of x which is type *big.Float.
+// The special cases are the same as for Log10.
+// Use Log10 for a more generic function that treats all types of the math/big package (*big.Int, *big.Float, *big.Rat).
 func FloatLog10(x *big.Float) float64 {
 	isOverflow := func(bigNum *big.Float) bool {
 		_, acc := bigNum.Float64()
@@ -96,6 +116,9 @@ func FloatLog10(x *big.Float) float64 {
 	return bigNumLog
 }
 
+// RatLog10 returns the decimal logarithm of x which is type *big.Rat.
+// The special cases are the same as for Log10.
+// Use Log10 for a more generic function that treats all types of the math/big package (*big.Int, *big.Float, *big.Rat).
 func RatLog10(x *big.Rat) float64 {
 	isOverflow := func(bigNum interface{}) bool {
 		switch bigNum := bigNum.(type) {
@@ -144,8 +167,4 @@ func RatLog10(x *big.Rat) float64 {
 	bigNumLog := math.Log10(v) * numMul
 
 	return bigNumLog
-}
-
-type Big interface {
-	Sign() int
 }
