@@ -89,30 +89,21 @@ func FloatLog10(x *big.Float) float64 {
 		}
 	}
 
-	isOf := isOverflow(x)
-
-	if !isOf {
+	if !isOverflow(x) {
 		v, _ := x.Float64()
 		return math.Log10(v)
 	}
 
-	num := make([]*big.Float, 0)
+	thRoot := big.NewFloat(0).Sqrt(x)
+	numMul := 2
 
-	firstIteration := true
-	for isOf {
-		if firstIteration {
-			num = append(num, big.NewFloat(0).Sqrt(x))
-			firstIteration = false
-		} else {
-			num = append(num, big.NewFloat(0).Sqrt(num[len(num)-1]))
-		}
-		isOf = isOverflow(num[len(num)-1])
+	for isOverflow(thRoot) {
+		thRoot.Sqrt(thRoot)
+		numMul = numMul << 1
 	}
 
-	numMul := math.Pow(2, float64(len(num)))
-
-	v, _ := num[len(num)-1].Float64()
-	bigNumLog := math.Log10(v) * numMul
+	v, _ := thRoot.Float64()
+	bigNumLog := math.Log10(v) * float64(numMul)
 
 	return bigNumLog
 }
