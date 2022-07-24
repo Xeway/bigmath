@@ -4,8 +4,10 @@
 
 > ### How is computed the _logarithm_ of a number ?
 
-It's not that difficult since we have the [`Log10` function provided by the math package](https://pkg.go.dev/math#Log10). So we just have to convert the big number into a `float64` (type input required by [`Log10`](https://pkg.go.dev/math#Log10)), and we're good.<br>
-But if an _overflow_ happens, it's bad!<br>
+It's not that difficult since we have the [`Log10` function provided by the math package](https://pkg.go.dev/math#Log10). So we just have to convert the big number into a `float64` (type input required by [`Log10`](https://pkg.go.dev/math#Log10)), and we're good.
+
+But if an _overflow_ happens, it's bad!
+
 So we check if the number is _too big_ to be converted into a `float64`.
 If so, we know that:
 
