@@ -94,15 +94,15 @@ func FloatLog10(x *big.Float) float64 {
 		return math.Log10(v)
 	}
 
-	thRoot := big.NewFloat(0).Sqrt(x)
+	x.Sqrt(x)
 	numMul := 2
 
-	for isOverflow(thRoot) {
-		thRoot.Sqrt(thRoot)
+	for isOverflow(x) {
+		x.Sqrt(x)
 		numMul = numMul << 1
 	}
 
-	v, _ := thRoot.Float64()
+	v, _ := x.Float64()
 	bigNumLog := math.Log10(v) * float64(numMul)
 
 	return bigNumLog
