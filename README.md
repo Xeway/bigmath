@@ -17,7 +17,7 @@ So we can do:
 
 $log(x) = log(\sqrt{x}) + log(\sqrt{x})$&emsp;<sub>(let $x$ be a big number)</sub>
 
-By computing the square root of _x_ (with the [`Sqrt` function provided by the math/big package](https://pkg.go.dev/math/big)), that value will be smaller ($\sqrt{x} < x$) and _may_ not cause an _overflow_.<br>
+By computing the square root of $x$ (with the [`Sqrt` function provided by the math/big package](https://pkg.go.dev/math/big)), that value will be smaller ($\sqrt{x} < x$) and _may_ not cause an _overflow_.<br>
 If it doesn't _overflow_, by _adding_ the _logarithm_ of this value with itself $(log(\sqrt{x}) + log(\sqrt{x}))$, we can compute the _logarithm_ of the big number.<br>
 Now if $\sqrt{x}$ still _overflows_, we just have to compute $\sqrt{\sqrt{x}}$. In other terms we get the _fourth root_. So to get $log(x)$, we have to multiply $\sqrt{\sqrt{x}} \times 4$.<br>
 And if $\sqrt{\sqrt{x}}$ is still too big, we continue the same process by computing its square root, and multiply it by $8$.
