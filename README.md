@@ -11,11 +11,11 @@ But if an _overflow_ happens, it's bad!
 So we check if the number is _too big_ to be converted into a `float64`.
 If so, we know that:
 
-$log\big(a \times b\big) = log(a) + log(b)$
+$log\big(ab\big) = log(a) + log(b)$
 
 So we can do:
 
-$log(x) = log(\sqrt{x}) + log(\sqrt{x})$&emsp;<sub>(let x be a big number)</sub>
+$log(x) = log(\sqrt{x}) + log(\sqrt{x})$&emsp;<sub>(let $x$ be a big number)</sub>
 
 By computing the square root of _x_ (with the [`Sqrt` function provided by the math/big package](https://pkg.go.dev/math/big)), that value will be smaller ($\sqrt{x} < x$) and _may_ not cause an _overflow_.<br>
 If it doesn't _overflow_, by _adding_ the _logarithm_ of this value with itself $(log(\sqrt{x}) + log(\sqrt{x}))$, we can compute the _logarithm_ of the big number.<br>
@@ -25,7 +25,7 @@ So the general formula is:
 
 $$log\big(\sqrt[2^{n}]{x}\big) \times 2^{n} = log(x)$$
 
-<sup>(n ∈ N being the number of times we've computed the square root of the previous square root until we found a decent value that doesn't _overflow_. Meaning when $\sqrt[2^{n}]{x} \leq$ `max number before overflow`)</sup>
+<sup>($n \in \mathbb{N}$ being the number of times we've computed the square root of the previous square root until we found a decent value that doesn't _overflow_. Meaning when $\sqrt[2^{n}]{x} \leq$ `max number before overflow`)</sup>
 
 ## Limitations of `Log10` (`IntLog10`, `FloatLog10`, `RatLog10`)
 
