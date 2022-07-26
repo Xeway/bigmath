@@ -34,7 +34,8 @@ And we know that $log\big(10^{p}\big) = p$.<br>
 With that, we can conclude that the **biggest** number we can compute its _logarithm_ is $10^{(2^{1024} - 1)}$.
 
 Also, the variable that can _overflows_ before reaching $10^{(2^{1024} - 1)}$ is $2^{n}$ (which is of type `int64` and therefore can handle up to $2^{63} - 1$).<br>
-We can know the **largest** number that can be computed before causing an _overflow_ to this value ($2^{n}$) by resolving this inequation:<br>
+We can know the **largest** number that can be computed before causing an _overflow_ to this value ($2^{n}$) by resolving this inequation:
+
 $\sqrt[2^{63} - 1]{x} \leq 2^{63} - 1$ for `IntLog10` (max value of `int64`: $2^{63} - 1$)<br>
 $\sqrt[2^{63} - 1]{x} \leq 2^{1024} - 1$ for `FloatLog10` and `RatLog10` (max value of `float64`: $2^{1024} - 1$)
 
