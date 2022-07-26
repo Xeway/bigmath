@@ -2,7 +2,7 @@
 
 **_This package provides mathematical functions that are not provided by the math/big package._**
 
-## How is computed the _logarithm_ of a number ?
+## How is computed the _logarithm_ of a big number ?
 
 It's not that difficult since we have the [`Log10` function provided by the math package](https://pkg.go.dev/math#Log10). So we just have to convert the big number into a `float64` (type input required by [`Log10`](https://pkg.go.dev/math#Log10)), and we're good.
 
