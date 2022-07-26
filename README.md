@@ -11,7 +11,7 @@ But if an _overflow_ happens, it's bad!
 So we check if the number is _too big_ to be converted into a `float64`.
 If so, we know that:
 
-$$log\big(a \times b\big) = log(a) + log(b)$$
+$log\big(a \times b\big) = log(a) + log(b)$
 
 So we can do:
 
@@ -40,8 +40,8 @@ $\sqrt[2^{63} - 1]{x} \leq 2^{1024} - 1$ for `FloatLog10` and `RatLog10` (max va
 
 So for `IntLog10`: $x \leq 10^{\frac{log\big(2^{63} - 1\big)}{(\frac{1}{2^{63} - 1})}}$ or $x \leq \sqrt[\frac{1}{2^{63} - 1}]{2^{63} - 1}$
 
-$$x \leq 10^{10^{20.24284004863006}}$$
+$x \leq 10^{10^{20.24284004863006}}$
 
 And for `FloatLog10`/`RatLog10`: $x \leq \sqrt[\frac{1}{2^{63} - 1}]{2^{1024} - 1}$
 
-$$x \leq 10^{10^{21.45379945581629}}$$
+$x \leq 10^{10^{21.45379945581629}}$
