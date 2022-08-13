@@ -17,7 +17,7 @@ So we can do:
 
 $log(x) = log(\sqrt{x}) + log(\sqrt{x})$&emsp;<sub>(let $x$ be a big number)</sub>
 
-By computing the square root of $x$ (with the [`Sqrt` function provided by the math/big package](https://pkg.go.dev/math/big)), that value will be smaller ($\sqrt{x} < x$) and _may_ not cause an _overflow_.<br>
+By computing the square root of $x$ (with the [`Sqrt` function provided by the math/big package](https://pkg.go.dev/math/big)), that value will be smaller $(\sqrt{x} < x)$ and _may_ not cause an _overflow_.<br>
 If it doesn't _overflow_, by _adding_ the _logarithm_ of this value with itself $(log(\sqrt{x}) + log(\sqrt{x}))$, we can compute the _logarithm_ of the big number.<br>
 Now if $\sqrt{x}$ still _overflows_, we just have to compute $\sqrt{\sqrt{x}}$. In other terms we get the _fourth root_. So to get $log(x)$, we have to multiply $\sqrt{\sqrt{x}} \times 4$.<br>
 And if $\sqrt{\sqrt{x}}$ is still too big, we continue the same process by computing its square root, and multiply it by $8$.
@@ -25,7 +25,7 @@ So the general formula is:
 
 $$log\big(\sqrt[2^{n}]{x}\big) \times 2^{n} = log(x)$$
 
-<sup>($n \in \mathbb{N}$ being the number of times we've computed the square root of the previous square root until we found a decent value that doesn't _overflow_. Meaning when $\sqrt[2^{n}]{x} \leq$ `max number before overflow`)</sup>
+<sup>$(n \in \mathbb{N}$ being the number of times we've computed the square root of the previous square root until we found a decent value that doesn't _overflow_. Meaning when $\sqrt[2^{n}]{x} \leq$ `max number before overflow`)</sup>
 
 ## Limitations of `Log10` (`IntLog10`, `FloatLog10`, `RatLog10`)
 
@@ -34,7 +34,7 @@ And we know that $log\big(10^{p}\big) = p$.<br>
 With that, we can conclude that the **biggest** number we can compute its _logarithm_ is $10^{(2^{1024} - 1)}$.
 
 Also, the variable that can _overflows_ before reaching $10^{(2^{1024} - 1)}$ is $2^{n}$ (which is of type `int64` and therefore can handle up to $2^{63} - 1$).<br>
-We can know the **largest** number that can be computed before causing an _overflow_ to this value ($2^{n}$) by resolving this inequation:
+We can know the **largest** number that can be computed before causing an _overflow_ to this value $(2^{n})$ by resolving this inequation:
 
 $\sqrt[2^{63} - 1]{x} \leq 2^{63} - 1$ for `IntLog10` (max value of `int64`: $2^{63} - 1$)<br>
 $\sqrt[2^{63} - 1]{x} \leq 2^{1024} - 1$ for `FloatLog10` and `RatLog10` (max value of `float64`: $2^{1024} - 1$)
