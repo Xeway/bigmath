@@ -1,4 +1,4 @@
-# big math
+# bigmath
 
 **_This package provides mathematical functions that are not provided by the math/big package._**
 
